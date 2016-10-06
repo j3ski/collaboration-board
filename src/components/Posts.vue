@@ -8,7 +8,7 @@
     </div>
     <transition-group name="posts-list">
       <div v-for="post in filteredPosts" :key="post.id" class="posts-list-item">
-        <h1>{{post.title}}</h1> <small>by: {{post.user.name}}</small>
+        <h1>{{post.title}} <button @click="remove(post)">Delete</button></h1> <small>by: {{post.user.name}}</small>
         <div>{{post.body}}</div>
         <router-link :to="{ name: 'comments', params: { postId: post.id} }">see comments</router-link>
       </div>
@@ -25,6 +25,12 @@
         posts: [],
         userFilter: '',
         contentFilter: ''
+      }
+    },
+    methods: {
+      remove: function(post) {
+        console.log('removing!', post);
+        this.posts = this.posts.filter(p => p !== post);
       }
     },
     computed: {
