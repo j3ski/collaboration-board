@@ -10,6 +10,7 @@
       <div v-for="post in filteredPosts" :key="post.id" class="posts-list-item">
         <h1>{{post.title}}</h1> <small>by: {{post.user.name}}</small>
         <div>{{post.body}}</div>
+        <router-link :to="{ name: 'comments', params: { postId: post.id} }">see comments</router-link>
       </div>
     </transition-group>
   </div>

@@ -3,10 +3,13 @@
     <div>
       <h1>{{post.title}}</h1>
       <div>{{post.body}}</div>
+      <router-link to="/posts">Back to posts</router-link>
     </div>
     <section>
-      <div v-for="comment in comments">
-        {{comment.body}}
+      <div v-for="comment in post.comments">
+        <h1>{{comment.name}}</h1>
+        <small>{{comment.email}}</small>
+        <div>{{comment.body}}</div>
       </div>
     </section>
   </div>
@@ -22,7 +25,7 @@
       }
     },
     beforeRouteEnter(to, from, next) {
-      store.getPostWithComments(to.postId)
+      store.getPostWithComments(to.params.postId)
         .then(post => next(vm => vm.post = post));
     }
   }
