@@ -16,9 +16,9 @@ npm run build
 
 # run unit tests
 npm run unit
-
-# run all tests
-npm test
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+Currently we use [jsonplaceholder](https://jsonplaceholder.typicode.com/') as our backend, but you can change the baseUrl in src/store/store.js and you are ready to go, as long as your backend has the same api.
+
+This project is based on [Vue](http://vuejs.org/) and [Vue-router](http://router.vuejs.org/), it was bootstrapped using [Vue cli](https://github.com/vuejs/vue-cli).
+
