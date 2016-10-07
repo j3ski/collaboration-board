@@ -1,12 +1,12 @@
-import Vue from 'vue'
-import Hello from 'src/components/Hello'
+import Vue from 'vue';
+import Comments from 'src/components/Comments';
 
-describe('Hello.vue', () => {
+describe('Comments.vue', () => {
   it('should render correct contents', () => {
     const vm = new Vue({
       el: document.createElement('div'),
-      render: (h) => h(Hello)
-    })
-    expect(vm.$el.querySelector('.hello h1').textContent).to.equal('Hello Vue!')
-  })
-})
+      render: (h) => h(Comments)
+    });
+    expect(vm.$el.querySelector('section h2').textContent).to.equal('Comments');
+  });
+});
