@@ -1,15 +1,18 @@
 <template>
-  <div>
-    <div>
+  <div class="comments">
+    <div class="post">
       <h1>{{post.title}}</h1>
       <div>{{post.body}}</div>
       <router-link to="/posts">Back to posts</router-link>
     </div>
     <section>
-      <div v-for="comment in post.comments">
-        <h1>{{comment.name}}</h1>
-        <small>{{comment.email}}</small>
-        <div>{{comment.body}}</div>
+      <h2>Comments</h2>
+      <div v-for="comment in post.comments" class="comment">
+        <div class="comment--head">
+          <h3>{{comment.name}}</h3>
+          <small>{{comment.email}}</small>
+        </div>
+        <div class="comment--body">{{comment.body}}</div>
       </div>
     </section>
   </div>
@@ -31,9 +34,26 @@
   }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  h1 {
-    color: #42b983;
+  .post h1 { color: #4EBABA;}
+  .comments {
+    padding: 10px;
+  }
+  section {
+    padding: 20px 0;
+  }
+
+  .comment {
+    padding: 10px 0;
+  }
+
+  .comment--head {
+    display: flex;
+    align-items: center;
+  }
+
+  .comment--head h3 {
+    padding-right: 10px;
+    color: #1DBB1D;
   }
 </style>

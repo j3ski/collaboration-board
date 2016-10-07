@@ -1,16 +1,27 @@
 <template>
   <div>
     <div class="filters">
-      <label for="userFilter">User:</label>
-      <input type="text" id="userFilter" v-model="userFilter">
-      <label for="contentFilter">Content:</label>
-      <input type="text" id="contentFilter" v-model="contentFilter">
+      <h2>Search by:</h2>
+      <div class="filter">
+        <label for="userFilter">User:</label>
+        <input type="text" id="userFilter" v-model="userFilter">
+      </div>
+      <div class="filter">
+        <label for="contentFilter">Content:</label>
+        <input type="text" id="contentFilter" v-model="contentFilter">
+      </div>
     </div>
     <transition-group name="posts-list">
-      <div v-for="post in filteredPosts" :key="post.id" class="posts-list-item">
-        <h1>{{post.title}} <button @click="remove(post)">Delete</button></h1> <small>by: {{post.user.name}}</small>
-        <div>{{post.body}}</div>
-        <router-link :to="{ name: 'comments', params: { postId: post.id} }">see comments</router-link>
+      <div v-for="post in filteredPosts" :key="post.id" class="post">
+        <div class="post--head">
+          <h1>{{post.title}}</h1>
+          <button @click="remove(post)">Delete</button>
+        </div>
+        <small>by: {{post.user.name}}</small>
+        <div class="post--body">
+          <div>{{post.body}}</div>
+          <router-link :to="{ name: 'comments', params: { postId: post.id} }">see comments</router-link>
+        </div>
       </div>
     </transition-group>
   </div>
@@ -29,8 +40,9 @@
     },
     methods: {
       remove: function(post) {
-        console.log('removing!', post);
         this.posts = this.posts.filter(p => p !== post);
+        store.removePost(post.id)
+           .catch(() => this.posts.push(post));
       }
     },
     computed: {
@@ -50,14 +62,28 @@
   }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  h1 {
-    color: #42b983;
-  }
-
-  .posts-list-item {
+  .post {
     transition: all 0.5s;
+    border: 1px solid gray;
+    margin: 10px;
+    padding: 10px;
+  }
+  .post--head {
+    display: flex;
+    justify-content: space-between;
+    color: #4EBABA;
+  }
+  .post--body {
+    padding-top: 5px;
+  }
+  .filters {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+  }
+  .filter {
+    padding: 0 10px;
   }
   .posts-list-enter, .posts-list-leave-active {
     opacity: 0;
@@ -65,5 +91,7 @@
   }
   .posts-list-leave-active {
     position: absolute;
+    left: 0;
+    right: 14px;
   }
 </style>

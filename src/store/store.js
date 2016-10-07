@@ -1,24 +1,30 @@
-const baseUrl = 'https://jsonplaceholder.typicode.com';
+const baseUrl = 'https://jsonplaceholder.typicode.com/';
 
+////////// Private methods
 function _getPosts(postId) {
   return postId ?
-    _fetchJSON(`${baseUrl}/posts/${postId}`) :
-    _fetchJSON(`${baseUrl}/posts`);
+    _fetchJSON(`posts/${postId}`) :
+    _fetchJSON(`posts`);
 }
 
 function _getUsers() {
-  return _fetchJSON(`${baseUrl}/users`);
+  return _fetchJSON(`users`);
 }
 
 function _getComments(postId) {
-  return _fetchJSON(`${baseUrl}/posts/${postId}/comments`);
+  return _fetchJSON(`posts/${postId}/comments`);
 }
 
-function _fetchJSON(url) {
-  return fetch(url)
+function _fetchJSON(url, options = {}) {
+  return fetch(`${baseUrl}${url}`, options)
     .then(r => r.json());
 }
 
+////////// Public methods
+/**
+ * Get posts with associated users
+ * @returns {Promise}
+ */
 function getPostsWithUsers() {
   return Promise.all([_getPosts(), _getUsers()])
     .then(([posts, users]) => {
@@ -30,6 +36,11 @@ function getPostsWithUsers() {
     });
 }
 
+/**
+ * Get post with comments
+ * @param {Number} postId - id of the post to be fetched
+ * @returns {Promise}
+ */
 function getPostWithComments(postId) {
   return Promise.all([_getPosts(postId), _getComments(postId)])
     .then(([post, comments]) => {
@@ -38,7 +49,17 @@ function getPostWithComments(postId) {
     });
 }
 
+/**
+ * Remove a post with the given id
+ * @param {Number} postId
+ * @returns {Promise}
+ */
+function removePost(postId) {
+  return _fetchJSON(`posts/${postId}`, {method: 'DELETE'});
+}
+
 export default {
   getPostsWithUsers,
-  getPostWithComments
+  getPostWithComments,
+  removePost
 }
